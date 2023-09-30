@@ -10,7 +10,7 @@ export class ChatController {
     }
     @Get()
     listChat(){
-        return this.ChatServices.finAll();
+        return this.ChatServices.findAll();
     }
 
     @Post()

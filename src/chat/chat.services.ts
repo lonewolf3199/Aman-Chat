@@ -9,7 +9,7 @@ export class ChatServices{
         return this.chatRepo.findOne(id);
     }
 
-    finAll(){
+    findAll(){
         return this.chatRepo.findAll();
     }
 
