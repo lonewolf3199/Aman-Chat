@@ -1,19 +1,20 @@
+import { Injectable } from "@nestjs/common";
 import { ChatRepository } from "./chat.repository";
+
+@Injectable()
 export class ChatServices{
-    chatRepo: ChatRepository;
-    constructor(){
-        this.chatRepo = new ChatRepository();
+    constructor(public ChatRepo: ChatRepository){
     }
 
     findOne(id: string){
-        return this.chatRepo.findOne(id);
+        return this.ChatRepo.findOne(id);
     }
 
     findAll(){
-        return this.chatRepo.findAll();
+        return this.ChatRepo.findAll();
     }
 
     create(content: string){
-        return this.chatRepo.create(content);
+        return this.ChatRepo.create(content);
     }
 }

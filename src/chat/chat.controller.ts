@@ -3,24 +3,21 @@ import { CreateChatDto } from './dtos/create_chat.dto';
 import { ChatServices } from './chat.services';
 @Controller('chat')
 export class ChatController {
-    ChatServices: ChatServices
-
-    constructor(){
-        this.ChatServices = new ChatServices();
+    constructor(public ChatService: ChatServices){
     }
     @Get()
     listChat(){
-        return this.ChatServices.findAll();
+        return this.ChatService.findAll();
     }
 
     @Post()
     createChat(@Body() body: CreateChatDto){        
-    return this.ChatServices.create(body.content)       
+    return this.ChatService.create(body.content)       
     }
 
     @Get('/:id')
     async getChat(@Param('id') id: string){
-    const chat = await this.ChatServices.findOne(id)
+    const chat = await this.ChatService.findOne(id)
 
     if(!chat){
         throw new NotFoundException('No Chat Was Found By The Provided ID!')
