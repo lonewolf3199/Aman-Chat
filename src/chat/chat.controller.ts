@@ -1,19 +1,30 @@
-import { Body, Controller, Get, Post, Param } from '@nestjs/common';
+import { Body, Controller, Get, Post, Param, NotFoundException } from '@nestjs/common';
 import { CreateChatDto } from './dtos/create_chat.dto';
+import { ChatServices } from './chat.services';
 @Controller('chat')
 export class ChatController {
+    ChatServices: ChatServices
+
+    constructor(){
+        this.ChatServices = new ChatServices();
+    }
     @Get()
-    listChat(){}
+    listChat(){
+        return this.ChatServices.finAll();
+    }
 
     @Post()
-    createChat(@Body() body: CreateChatDto){
-        console.log(body);
-        
+    createChat(@Body() body: CreateChatDto){        
+    return this.ChatServices.create(body.content)       
     }
 
     @Get('/:id')
-    getChat(@Param('id') id: string){
-        console.log(id);
-        
+    async getChat(@Param('id') id: string){
+    const chat = await this.ChatServices.findOne(id)
+
+    if(!chat){
+        throw new NotFoundException('No Chat Was Found By The Provided ID!')
+    }
+    return chat;
     }
 }
